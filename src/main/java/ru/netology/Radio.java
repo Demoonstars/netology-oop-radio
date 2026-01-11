@@ -1,28 +1,25 @@
 package ru.netology;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Radio {
-    private int maxStations;
+    private int maxStations = 10;
     private int currentStation;
     private int currentVolume;
 
-    // Конструктор по умолчанию (количество станций = 10)
-    public Radio() {
-        this.maxStations = 10;
+    // Конструктор с одним параметром (количество станций) оставляем вручную
+
+    public Radio(int maxStations) {
+        this.maxStations = maxStations;
     }
 
-    // Конструктор с желаемым количеством станций
-    public Radio(int stationsCount) {
-        this.maxStations = stationsCount;
-    }
-
-    // --- Работа с радиостанциями ---
-
-    public int getCurrentStation() {
-        return currentStation;
-    }
 
     public void setCurrentStation(int currentStation) {
-        // Номер станции должен быть от 0 до (количество - 1)
         if (currentStation < 0) {
             return;
         }
@@ -33,7 +30,6 @@ public class Radio {
     }
 
     public void next() {
-        // Если текущая станция максимальная (последняя), то переходим на 0
         if (currentStation == maxStations - 1) {
             currentStation = 0;
         } else {
@@ -42,18 +38,11 @@ public class Radio {
     }
 
     public void prev() {
-        // Если текущая станция 0, то переходим на максимальную (последнюю)
         if (currentStation == 0) {
             currentStation = maxStations - 1;
         } else {
             currentStation--;
         }
-    }
-
-    // --- Работа с громкостью (осталась без изменений 0-100) ---
-
-    public int getCurrentVolume() {
-        return currentVolume;
     }
 
     public void setCurrentVolume(int currentVolume) {
