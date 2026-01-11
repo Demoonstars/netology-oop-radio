@@ -1,29 +1,40 @@
 package ru.netology;
 
 public class Radio {
+    private int maxStations;
     private int currentStation;
     private int currentVolume;
 
-    // --- Работа с радиостанциями (0-9) ---
+    // Конструктор по умолчанию (количество станций = 10)
+    public Radio() {
+        this.maxStations = 10;
+    }
+
+    // Конструктор с желаемым количеством станций
+    public Radio(int stationsCount) {
+        this.maxStations = stationsCount;
+    }
+
+    // --- Работа с радиостанциями ---
 
     public int getCurrentStation() {
         return currentStation;
     }
 
     public void setCurrentStation(int currentStation) {
-        // Проверяем, что номер станции в пределах допустимого
+        // Номер станции должен быть от 0 до (количество - 1)
         if (currentStation < 0) {
             return;
         }
-        if (currentStation > 9) {
+        if (currentStation >= maxStations) {
             return;
         }
         this.currentStation = currentStation;
     }
 
     public void next() {
-        // Если текущая 9, то следующая будет 0
-        if (currentStation == 9) {
+        // Если текущая станция максимальная (последняя), то переходим на 0
+        if (currentStation == maxStations - 1) {
             currentStation = 0;
         } else {
             currentStation++;
@@ -31,23 +42,21 @@ public class Radio {
     }
 
     public void prev() {
-        // Если текущая 0, то предыдущая будет 9
+        // Если текущая станция 0, то переходим на максимальную (последнюю)
         if (currentStation == 0) {
-            currentStation = 9;
+            currentStation = maxStations - 1;
         } else {
             currentStation--;
         }
     }
 
-    // --- Работа с громкостью (0-100) ---
+    // --- Работа с громкостью (осталась без изменений 0-100) ---
 
     public int getCurrentVolume() {
         return currentVolume;
     }
 
     public void setCurrentVolume(int currentVolume) {
-        // Добавил этот сеттер для удобства тестирования,
-        // без него сложно выставить начальные условия для тестов громкости.
         if (currentVolume < 0) {
             return;
         }
@@ -58,14 +67,12 @@ public class Radio {
     }
 
     public void increaseVolume() {
-        // Если громкость уже максимальная (100), не увеличиваем
         if (currentVolume < 100) {
             currentVolume++;
         }
     }
 
     public void decreaseVolume() {
-        // Если громкость уже минимальная (0), не уменьшаем
         if (currentVolume > 0) {
             currentVolume--;
         }
